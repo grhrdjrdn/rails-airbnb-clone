@@ -1,0 +1,5 @@
+<p>Edit <%= @flat.name %></p>
+
+<%= render "form", flat: @flat %>
+
+<p>Back to <%= link_to @flat.name, flat_path(@flat) %></p>
