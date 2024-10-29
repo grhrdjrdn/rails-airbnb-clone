@@ -1,5 +1,29 @@
 
 Flat.destroy_all
+User.destroy_all
+
+users = [
+  { email: "user1@example.com", password: "123456" },
+  { email: "user2@company.com", password: "123456" },
+  { email: "hello3@mail.com", password: "123456" },
+  { email: "contact4@domain.com", password: "123456" },
+  { email: "test5@web.com", password: "123456" },
+  { email: "info6@website.com", password: "123456" },
+  { email: "mail7@mail.com", password: "123456" },
+  { email: "name8@company.com", password: "123456" },
+  { email: "user9@sample.com", password: "123456" },
+  { email: "demo10@service.com", password: "123456" },
+  { email: "admin11@network.com", password: "123456" },
+  { email: "support12@help.com", password: "123456" },
+  { email: "client13@domain.com", password: "123456" },
+  { email: "user14@business.com", password: "123456" },
+  { email: "member15@web.com", password: "123456" },
+  { email: "register16@mail.com", password: "123456" },
+  { email: "account17@provider.com", password: "123456" },
+  { email: "profile18@service.com", password: "123456" },
+  { email: "subscriber19@domain.com", password: "123456" },
+  { email: "guest20@site.com", password: "123456" }
+]
 
 flats = [
   { name: "Nice Apartment in Melbourne", description: "This is a nice flat with 2 bedrooms." },
@@ -55,7 +79,12 @@ flats = [
   { name: "Ringwood Forest Retreat", description: "Surrounded by trees, a nature lover’s paradise." }
 ]
 
+users.each do |attributes|
+  user = User.create!(attributes)
+  puts "Created #{user.email}"
+end
+
 flats.each do |attributes|
-  flat = Flat.create!(attributes)
-  puts "Created #{flat.name}"
+  flat = Flat.create!(attributes.merge(user: User.all.sample))
+  puts "Created #{flat.name} with user #{flat.user.email}"
 end
