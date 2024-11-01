@@ -2,6 +2,7 @@
 <ul>
   <% @flats.each do |flat| %>
     <li>
+      <%= cl_image_tag flat.photos.first.key, height: 300, width: 400, crop: :fill %>
       <%= link_to flat.name, flat_path(flat) %>
     </li>
   <% end %>
