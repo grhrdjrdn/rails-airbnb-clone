@@ -1,5 +1,6 @@
 require "open-uri"
 
+Booking.destroy_all
 Flat.destroy_all
 User.destroy_all
 
