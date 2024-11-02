@@ -1,0 +1,30 @@
+<h1>Dashboard Page!</h1>
+<h3>All my Flats</h3>
+<ul>
+<% @my_flats.each do |flat| %>
+    <li>
+      <% if flat.photos.attached? %>
+        <%= cl_image_tag flat.photos.first.key, height: 300, width: 400, crop: :fill %>
+      <% end %>
+      <%= link_to flat.name, flat_path(flat) %>
+    </li>
+<% end %>
+</ul>
+
+
+
+<h3>My Bookings</h3>
+<% @my_bookings.each do |booking| %>
+<%= booking.flat.name %>
+<%= booking.start_date %>
+<%= booking.end_date %>
+<%= booking.status %>
+<% end %>
+
+<h3>Bookings requests</h3>
+<% @bookings_made_to_me.each do |booking| %>
+<%= booking.flat.name %>
+<%= booking.start_date %>
+<%= booking.end_date %>
+<%= booking.status %>
+<% end %>
