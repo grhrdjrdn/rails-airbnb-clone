@@ -15,10 +15,14 @@ class FlatsController < ApplicationController
   end
 
   def create
-    @flat = Flat.new(flat_params)
+    # @flat = Flat.new(flat_params)
+    @flat = Flat.new(flat_params.merge(user: current_user))
+    # raise
+    # puts @flat.errors.full_message
     if @flat.save
       redirect_to flat_path(@flat)
     else
+      puts @flat.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
@@ -46,7 +50,7 @@ class FlatsController < ApplicationController
   end
 
   def flat_params
-    params.require(:flat).permit(:name, :description)
+    params.require(:flat).permit(:name, :description, photos: [])
   end
 
 end

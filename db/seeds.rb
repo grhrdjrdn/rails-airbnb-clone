@@ -1,5 +1,48 @@
+require "open-uri"
 
 Flat.destroy_all
+User.destroy_all
+
+images = [
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-weinerovych-1.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-voglovych-3.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-voglovych-1.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-voglovych-1.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-krausovych-3.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/byt-krausovych-2.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/brummeluv-dum-2.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/brummeluv-dum-3.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/brummeluv-dum-4.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/brummeluv-dum-1.webp",
+  "https://www.ft.com/__origami/service/image/v2/images/raw/ftcms%3A203d060c-ea53-4856-97bf-e963c9062d06?source=next-article&fit=scale-down&quality=highest&width=700&dpr=2",
+  "https://www.ft.com/__origami/service/image/v2/images/raw/ftcms%3A02411559-1671-4bdc-a7ea-bab840e8fb11?source=next-article&fit=scale-down&quality=highest&width=700&dpr=2",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/apartman-richarda-hirsche-2.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/apartman-richarda-hirsche-4.webp",
+  "https://s3-eu-central-1.amazonaws.com/tf-prod-adolf-loos/loos2024/var/www/rocketstack/web/app/uploads/apartman-richarda-hirsche-1.webp"
+]
+
+users = [
+  { email: "user1@example.com", password: "123456" },
+  { email: "user2@company.com", password: "123456" },
+  { email: "hello3@mail.com", password: "123456" },
+  { email: "contact4@domain.com", password: "123456" },
+  { email: "test5@web.com", password: "123456" },
+  { email: "info6@website.com", password: "123456" },
+  { email: "mail7@mail.com", password: "123456" },
+  { email: "name8@company.com", password: "123456" },
+  { email: "user9@sample.com", password: "123456" },
+  { email: "demo10@service.com", password: "123456" },
+  { email: "admin11@network.com", password: "123456" },
+  { email: "support12@help.com", password: "123456" },
+  { email: "client13@domain.com", password: "123456" },
+  { email: "user14@business.com", password: "123456" },
+  { email: "member15@web.com", password: "123456" },
+  { email: "register16@mail.com", password: "123456" },
+  { email: "account17@provider.com", password: "123456" },
+  { email: "profile18@service.com", password: "123456" },
+  { email: "subscriber19@domain.com", password: "123456" },
+  { email: "guest20@site.com", password: "123456" }
+]
 
 flats = [
   { name: "Nice Apartment in Melbourne", description: "This is a nice flat with 2 bedrooms." },
@@ -55,7 +98,19 @@ flats = [
   { name: "Ringwood Forest Retreat", description: "Surrounded by trees, a nature lover’s paradise." }
 ]
 
-flats.each do |attributes|
-  flat = Flat.create!(attributes)
-  puts "Created #{flat.name}"
+users.each do |attributes|
+  user = User.create!(attributes)
+  puts "Created #{user.email}"
+end
+
+flats.sample(5).each do |attributes|
+  flat = Flat.new(attributes.merge(user: User.all.sample))
+  images.sample(2).each do |image|
+    file = URI.parse(image).open
+    type = file.content_type
+    name = File.basename(file.base_uri.path)
+    flat.photos.attach(io: file, filename: name, content_type: type)
+  end
+  flat.save
+  puts "Created #{flat.name} with user #{flat.user.email}"
 end
