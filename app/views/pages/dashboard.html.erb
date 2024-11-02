@@ -1,5 +1,5 @@
 <h1>Dashboard Page!</h1>
-<h3>All my Flats</h3>
+<h3 class='mt-5'>All my Flats</h3>
 <ul>
 <% @my_flats.each do |flat| %>
     <li>
@@ -13,18 +13,22 @@
 
 
 
-<h3>My Bookings</h3>
+<h3 class='mt-5'>My Bookings</h3>
 <% @my_bookings.each do |booking| %>
-<%= booking.flat.name %>
-<%= booking.start_date %>
-<%= booking.end_date %>
-<%= booking.status %>
+<div>
+  <%= booking.flat.name %>
+  <%= booking.start_date %>
+  <%= booking.end_date %>
+  <%= booking.status %>
+</div>
 <% end %>
 
-<h3>Bookings requests</h3>
+<h3 class='mt-5'>Bookings requests</h3>
 <% @bookings_made_to_me.each do |booking| %>
-<%= booking.flat.name %>
-<%= booking.start_date %>
-<%= booking.end_date %>
-<%= booking.status %>
+<div>
+  <%= booking.flat.name %>
+  <%= booking.start_date %>
+  <%= booking.end_date %>
+  <%= booking.status %>
+</div>
 <% end %>
