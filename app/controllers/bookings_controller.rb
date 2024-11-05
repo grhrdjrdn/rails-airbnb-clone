@@ -10,7 +10,8 @@ class BookingsController < ApplicationController
     @flat = Flat.find(params[:flat_id])
     @booking.flat = @flat
     if @booking.save
-      redirect_to flat_path(@flat)
+      # redirects to my_bookings
+      redirect_to bookings_path
     else
       render :new, status: :unprocessable_entity
     end
