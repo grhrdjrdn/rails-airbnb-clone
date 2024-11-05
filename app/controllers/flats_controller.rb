@@ -4,6 +4,9 @@ class FlatsController < ApplicationController
 
   def index
     @flats = Flat.all
+    if params[:query].present?
+      @flats = Flat.search_by_name_and_description(params[:query])
+    end
   end
 
   def show
