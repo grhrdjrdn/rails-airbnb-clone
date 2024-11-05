@@ -10,15 +10,17 @@
 
 <% end %>
 
-<p><%= link_to "Edit", edit_flat_path(@flat) %></p>
-<p>
-  <%= link_to "Delete",
-    flat_path(@flat),
-    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-  %>
+
+<% if @flat.user.id == current_user.id %>
+  <p>This is my flat</p>
+  <p><%= link_to "Edit", edit_flat_path(@flat) %></p>
+  <p>
+    <%= link_to "Delete",
+      flat_path(@flat),
+      data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+    %>
 </p>
-<p><%= link_to "All flats", flats_path %></p>
-
-<h2>Make a booking</h2>
-
-<%= render "bookings/form" %>
+<% else %>
+  <h3 class='mt-5'>Make a booking</h3>
+  <%= render "bookings/form" %>
+<% end %>
