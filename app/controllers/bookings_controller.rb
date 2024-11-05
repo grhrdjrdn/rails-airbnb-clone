@@ -21,9 +21,26 @@ class BookingsController < ApplicationController
     @bookings = current_user.bookings
   end
 
+  def approve
+    @booking = Booking.find(params[:booking_id])
+    @booking.status = 1
+    if @booking.save
+      redirect_to dashboard_path
+    end
+  end
+
+  def deny
+    @booking = Booking.find(params[:booking_id])
+    @booking.status = 2
+    if @booking.save
+      redirect_to dashboard_path
+    end
+  end
+
   private
 
   def booking_params
     params.require(:booking).permit(:start_date, :end_date)
   end
+
 end
