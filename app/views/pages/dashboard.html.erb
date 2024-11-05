@@ -30,5 +30,12 @@
   <%= booking.start_date %>
   <%= booking.end_date %>
   <%= booking.status %>
+  <% if booking.status == "pending" || booking.status == "denied" %>
+    <%= button_to "Approve", booking_approve_path(booking), method: :patch %>
+  <% end %>
+  <% if booking.status == "pending" || booking.status == "booked" %>
+    <%= button_to "Deny",  booking_deny_path(booking), method: :patch %>
+  <% end %>
+
 </div>
 <% end %>
