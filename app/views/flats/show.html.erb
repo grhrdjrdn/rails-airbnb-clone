@@ -10,17 +10,24 @@
 
 <% end %>
 
+<% if user_signed_in? %>
 
-<% if @flat.user.id == current_user.id %>
-  <p>This is my flat</p>
-  <p><%= link_to "Edit", edit_flat_path(@flat) %></p>
-  <p>
-    <%= link_to "Delete",
-      flat_path(@flat),
-      data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-    %>
-</p>
+  <% if @flat.user.id == current_user.id %>
+    <p>This is my flat</p>
+    <p><%= link_to "Edit", edit_flat_path(@flat) %></p>
+    <p>
+      <%= link_to "Delete",
+        flat_path(@flat),
+        data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+      %>
+  </p>
+  <% else %>
+    <h3 class='mt-5'>Make a booking</h3>
+    <%= render "bookings/form" %>
+  <% end %>
+
 <% else %>
-  <h3 class='mt-5'>Make a booking</h3>
-  <%= render "bookings/form" %>
+
+  <%= link_to "Log in to book", new_user_session_path %>
+
 <% end %>
