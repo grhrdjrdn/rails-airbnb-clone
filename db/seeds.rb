@@ -94,3 +94,42 @@ flats.sample(5).each do |attributes|
   flat.save
   puts "Created #{flat.name} with user #{flat.user.email}"
 end
+
+
+# create a test user
+attributes_1 = { email: "mail@mail.com", password: "123456" }
+user_1 = User.create!(attributes_1)
+puts "Created #{user_1.email} with password #{user_1.password}"
+
+# create a test flat
+attributes_flat_1 = {
+  name: "Modernist 2-Bedroom Apartment in the City of Love",
+  description: "Spacious apartment with city views and modern amenities.",
+  address: "18 Queen St, Melbourne VIC 3000",
+  user: user_1 }
+flat_1 = Flat.new(attributes_flat_1)
+images.sample(2).each do |image|
+  file = URI.parse(image).open
+  type = file.content_type
+  name = File.basename(file.base_uri.path)
+  flat_1.photos.attach(io: file, filename: name, content_type: type)
+end
+flat_1.save
+
+# create a test booking
+booking_attributes = {
+  start_date: DateTime.new(2024, 11, 06),
+  end_date: DateTime.new(2024, 11, 10),
+  user_id: user_1.id,
+  flat_id: Flat.first.id
+}
+Booking.create!(booking_attributes)
+
+# create a test booking on a flat that this user owns
+booking_attributes_1 = {
+  start_date: DateTime.new(2024, 11, 06),
+  end_date: DateTime.new(2024, 11, 10),
+  user_id: User.all.first.id,
+  flat_id: user_1.flats.first.id
+}
+Booking.create!(booking_attributes_1)
