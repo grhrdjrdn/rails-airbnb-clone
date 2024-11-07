@@ -99,7 +99,7 @@ end
 # create a test user
 attributes_1 = { email: "mail@mail.com", password: "123456" }
 user_1 = User.create!(attributes_1)
-puts "Created #{user_1.email} with password #{user_1.password}"
+puts "Created a test user #{user_1.email} with password #{user_1.password}"
 
 # create a test flat
 attributes_flat_1 = {
@@ -115,6 +115,7 @@ images.sample(2).each do |image|
   flat_1.photos.attach(io: file, filename: name, content_type: type)
 end
 flat_1.save
+puts "Created a test flat"
 
 # create a test booking
 booking_attributes = {
@@ -124,6 +125,7 @@ booking_attributes = {
   flat_id: Flat.first.id
 }
 Booking.create!(booking_attributes)
+puts "Created a test booking"
 
 # create a test booking on a flat that this user owns
 booking_attributes_1 = {
@@ -133,3 +135,17 @@ booking_attributes_1 = {
   flat_id: user_1.flats.first.id
 }
 Booking.create!(booking_attributes_1)
+puts "Created a booking on a flat that the test user owns"
+
+# EACH USER MAKES A BOOKING ON A RANDOM FLAT
+User.all.each do |user|
+  randomflat_id = Flat.where.not(user_id: user.id).sample.id
+  booking_attributes = {
+    start_date: DateTime.new(2024, 11, 06),
+    end_date: DateTime.new(2024, 11, 10),
+    user_id: user.id,
+    flat_id: randomflat_id
+  }
+  Booking.create!(booking_attributes)
+  puts "created booking for user #{user.email}"
+end
