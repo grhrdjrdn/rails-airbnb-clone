@@ -1,5 +1,6 @@
-<%= simple_form_for [@flat, @booking] do |f| %>
-  <%= f.input :start_date, as: :string, input_html: { data: { controller: "datepicker" } } %>
-  <%= f.input :end_date, as: :string, input_html: { data: { controller: "datepicker" } } %>
+<%= simple_form_for [@flat, @booking], data: { controller: "datepicker", datepicker_booked_dates: @booked_dates.to_json } do |f| %>
+  <%= f.input :start_date, as: :string, input_html: { data: { datepicker_target: "startDate"} } %>
+  <%= f.input :end_date, as: :string, input_html: { data: { datepicker_target: "endDate" } } %>
+  <div data-datepicker-target="bookedDates" data-booked-dates="<%= @booked_dates.to_json %>"></div>
   <%= f.submit %>
 <% end %>

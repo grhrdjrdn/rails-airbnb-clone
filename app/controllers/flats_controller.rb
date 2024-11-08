@@ -13,6 +13,9 @@ class FlatsController < ApplicationController
 
   def show
     @booking = Booking.new
+    @booked_dates = @flat.bookings.flat_map do |booking|
+      (booking.start_date..booking.end_date).to_a
+    end
   end
 
   def new
