@@ -1,33 +1,52 @@
-<p><%= @flat.name %></p>
-<p><%= @flat.description %></p>
-<p><%= @flat.address %></p>
+<div class="show">
+  <h2 class='my-5'><%= @flat.name %></h2>
+  <p><%= @flat.description %><br>
+  <%= @flat.address %></p>
 
-<% if @flat.photos.attached? %>
+  <% if @flat.photos.attached? %>
 
-  <% @flat.photos.each do |photo| %>
-    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+    <div id="carouselExample" class="carousel slide my-4">
+      <div class="carousel-inner">
+        <% @flat.photos.each_with_index do |photo, index| %>
+          <div class="carousel-item <%= "active" if index == 0 %>">
+            <%= cl_image_tag photo.key, height: 600, class: "d-block w-100" %>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
   <% end %>
 
-<% end %>
+  <% if user_signed_in? %>
 
-<% if user_signed_in? %>
+    <% if @flat.user.id == current_user.id %>
+      <div class="my-3">
+        <%= link_to "Edit",
+          edit_flat_path(@flat),
+          class:"btn btn-primary" %>
+        <%= link_to "Delete",
+          flat_path(@flat),
+          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+          class:"btn btn-primary"
+        %>
+      </div>
+    <% else %>
+      <h3 class='mt-5'>Make a booking</h3>
+      <%= render "bookings/form" %>
+    <% end %>
 
-  <% if @flat.user.id == current_user.id %>
-    <p>This is my flat</p>
-    <p><%= link_to "Edit", edit_flat_path(@flat) %></p>
-    <p>
-      <%= link_to "Delete",
-        flat_path(@flat),
-        data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-      %>
-  </p>
   <% else %>
-    <h3 class='mt-5'>Make a booking</h3>
-    <%= render "bookings/form" %>
+
+    <%= link_to "Log in to book", new_user_session_path %>
+
   <% end %>
 
-<% else %>
-
-  <%= link_to "Log in to book", new_user_session_path %>
-
-<% end %>
+</div>
