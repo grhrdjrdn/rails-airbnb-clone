@@ -80,8 +80,8 @@
               <td><%= booking.start_date %></td>
               <td><%= booking.end_date %></td>
               <td class="status" style="width: 150px"><%= booking.status %></td>
-              <td><button class='btn-deny' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">AJAX Deny</button>
-              <button class='btn-approve' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">AJAX Approve</button></td>
+              <td><button class='btn-deny' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">Deny</button>
+              <button class='btn-approve' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">Approve</button></td>
               </tr>
           <% end %>
       </tbody>
