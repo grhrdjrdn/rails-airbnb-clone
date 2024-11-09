@@ -47,26 +47,20 @@
     </div>
   </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-    <div>
+    <div data-controller="booking-status">
     <% @bookings_made_to_me.each do |booking| %>
-      <div>
+      <div class='<%= booking.status %>'>
         <%= booking.flat.name %>
         <%= booking.start_date %>
         <%= booking.end_date %>
-        <%= booking.status %>
-        <% if booking.status == "pending" || booking.status == "denied" %>
-          <%= button_to "Approve", booking_approve_path(booking), method: :patch %>
-        <% end %>
-        <% if booking.status == "pending" || booking.status == "booked" %>
-          <%= button_to "Deny",  booking_deny_path(booking), method: :patch %>
-        <% end %>
+        <div class="status"><%= booking.status %></div>
+        <button class='btn-deny' data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">AJAX Deny</button>
+        <button class='btn-approve' data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">AJAX Approve</button>
       </div>
     <% end %>
     </div>
   </div>
 </div>
-
-
 
 
 <script>
