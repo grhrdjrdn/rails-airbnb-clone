@@ -1,3 +1,15 @@
 .flat-list ul {
   list-style-type: none;
 }
+
+.table-pending {
+  color: rgb(116, 116, 116) !important;
+}
+
+.table-booked {
+  color: rgb(0, 148, 2) !important;
+}
+
+.table-denied {
+  color: rgb(208, 18, 1) !important;
+}
