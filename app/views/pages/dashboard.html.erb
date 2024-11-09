@@ -23,7 +23,7 @@
             <div class="card">
               <% if flat.photos.attached? %>
                 <div class="card-img-top">
-                  <%= cl_image_tag flat.photos.first.key, height: 300, width: 478, crop: :fill %>
+                  <%= cl_image_tag flat.photos.first.key, height: 300, width: 478, crop: :fill, class:"w-100" %>
                 </div>
               <% end %>
               <div class="card-body">
