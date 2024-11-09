@@ -3,3 +3,6 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+
+import DashboardTabs from "./controllers/dashboard_tabs.js"
+Stimulus.register("dashboard-tabs", DashboardTabs)

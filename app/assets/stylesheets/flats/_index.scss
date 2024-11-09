@@ -1,0 +1,36 @@
+.card-collection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 16px;
+}
+
+.outer-cards {
+  display: flex;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin: 16px;
+}
+
+.search-bar h1 {
+  margin-bottom: 16px;
+}
+
+#query {
+  width: 500px;
+}
+
+.card-body a{
+  text-decoration: none;
+}
+
+.card-body a:hover{
+  text-decoration: none;
+  color: $primary-colour;
+}
