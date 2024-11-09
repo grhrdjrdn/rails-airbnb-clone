@@ -1,5 +1,13 @@
-<p>Edit <%= @flat.name %></p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-8">
 
-<%= render "form", flat: @flat %>
+      <h4>Edit <%= @flat.name %></h4>
 
-<p>Back to <%= link_to @flat.name, flat_path(@flat) %></p>
+      <%= render "form", flat: @flat %>
+
+      <p>Back to <%= link_to @flat.name, flat_path(@flat) %></p>
+
+    </div>
+  </div>
+</div>
