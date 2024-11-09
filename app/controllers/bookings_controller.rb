@@ -2,6 +2,9 @@ class BookingsController < ApplicationController
   def new
     @booking = Booking.new
     @flat = Flat.find(params[:flat_id])
+    @booked_dates = @flat.bookings.flat_map do |booking|
+      (booking.start_date..booking.end_date).to_a
+    end
   end
 
   def create

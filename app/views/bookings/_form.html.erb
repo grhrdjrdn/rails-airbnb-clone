@@ -2,5 +2,5 @@
   <%= f.input :start_date, as: :string, input_html: { data: { datepicker_target: "startDate"} } %>
   <%= f.input :end_date, as: :string, input_html: { data: { datepicker_target: "endDate" } } %>
   <div data-datepicker-target="bookedDates" data-booked-dates="<%= @booked_dates.to_json %>"></div>
-  <%= f.submit %>
+  <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>
