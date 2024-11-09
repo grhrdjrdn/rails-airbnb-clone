@@ -1,41 +1,82 @@
-<h1>Dashboard Page!</h1>
-<h3 class='mt-5'>All my Flats</h3>
-<ul>
-<% @my_flats.each do |flat| %>
-    <li>
-      <% if flat.photos.attached? %>
-        <%= cl_image_tag flat.photos.first.key, height: 300, width: 400, crop: :fill %>
-      <% end %>
-      <%= link_to flat.name, flat_path(flat) %>
-    </li>
-<% end %>
+<div>
+  <h1>Dashboard Page!</h1>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">All Flats</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">My Bookings</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Booking Requests</button>
+  </li>
 </ul>
 
 
-
-<h3 class='mt-5'>My Bookings</h3>
-<% @my_bookings.each do |booking| %>
-<div>
-  <%= booking.flat.name %>
-  <%= booking.start_date %>
-  <%= booking.end_date %>
-  <%= booking.status %>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="outer-cards">
+        <div class="card-collection">
+          <% @my_flats.each do |flat| %>
+            <div class="card">
+              <% if flat.photos.attached? %>
+                <div class="card-img-top">
+                  <%= cl_image_tag flat.photos.first.key, height: 300, width: 400, crop: :fill %>
+                </div>
+              <% end %>
+              <div class="card-body">
+              <h5><%= link_to flat.name, flat_path(flat) %></h5>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div>
+      <% @my_bookings.each do |booking| %>
+      <div>
+        <%= booking.flat.name %>
+        <%= booking.start_date %>
+        <%= booking.end_date %>
+        <%= booking.status %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <div>
+    <% @bookings_made_to_me.each do |booking| %>
+      <div>
+        <%= booking.flat.name %>
+        <%= booking.start_date %>
+        <%= booking.end_date %>
+        <%= booking.status %>
+        <% if booking.status == "pending" || booking.status == "denied" %>
+          <%= button_to "Approve", booking_approve_path(booking), method: :patch %>
+        <% end %>
+        <% if booking.status == "pending" || booking.status == "booked" %>
+          <%= button_to "Deny",  booking_deny_path(booking), method: :patch %>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+  </div>
 </div>
-<% end %>
 
-<h3 class='mt-5'>Bookings requests</h3>
-<% @bookings_made_to_me.each do |booking| %>
-<div>
-  <%= booking.flat.name %>
-  <%= booking.start_date %>
-  <%= booking.end_date %>
-  <%= booking.status %>
-  <% if booking.status == "pending" || booking.status == "denied" %>
-    <%= button_to "Approve", booking_approve_path(booking), method: :patch %>
-  <% end %>
-  <% if booking.status == "pending" || booking.status == "booked" %>
-    <%= button_to "Deny",  booking_deny_path(booking), method: :patch %>
-  <% end %>
 
-</div>
-<% end %>
+
+
+<script>
+  var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'))
+  triggerTabList.forEach(function (triggerEl) {
+  var tabTrigger = new bootstrap.Tab(triggerEl)
+
+  triggerEl.addEventListener('click', function (event) {
+    event.preventDefault()
+    tabTrigger.show()
+  })
+  })
+</script>
