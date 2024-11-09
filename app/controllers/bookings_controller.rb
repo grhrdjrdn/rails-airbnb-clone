@@ -24,16 +24,22 @@ class BookingsController < ApplicationController
   def approve
     @booking = Booking.find(params[:booking_id])
     @booking.status = 1
-    if @booking.save
-      redirect_to dashboard_path
+    respond_to do |format|
+      if @booking.save
+        format.html { redirect_to dashboard_path }
+        format.json { render json: {status: "booked"} }
+      end
     end
   end
 
   def deny
     @booking = Booking.find(params[:booking_id])
     @booking.status = 2
-    if @booking.save
-      redirect_to dashboard_path
+    respond_to do |format|
+      if @booking.save
+        format.html { redirect_to dashboard_path }
+        format.json { render json: {status: "denied"} }
+      end
     end
   end
 

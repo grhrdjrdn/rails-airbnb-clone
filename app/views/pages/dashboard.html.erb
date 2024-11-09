@@ -24,18 +24,15 @@
 <% end %>
 
 <h3 class='mt-5'>Bookings requests</h3>
-<% @bookings_made_to_me.each do |booking| %>
-<div>
-  <%= booking.flat.name %>
-  <%= booking.start_date %>
-  <%= booking.end_date %>
-  <%= booking.status %>
-  <% if booking.status == "pending" || booking.status == "denied" %>
-    <%= button_to "Approve", booking_approve_path(booking), method: :patch %>
+<div data-controller="booking-status">
+  <% @bookings_made_to_me.each do |booking| %>
+    <div class='<%= booking.status %>'>
+      <%= booking.flat.name %>
+      <%= booking.start_date %>
+      <%= booking.end_date %>
+      <div class="status"><%= booking.status %></div>
+      <button class='btn-deny' data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">AJAX Deny</button>
+      <button class='btn-approve' data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">AJAX Approve</button>
+    </div>
   <% end %>
-  <% if booking.status == "pending" || booking.status == "booked" %>
-    <%= button_to "Deny",  booking_deny_path(booking), method: :patch %>
-  <% end %>
-
 </div>
-<% end %>
