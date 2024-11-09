@@ -23,7 +23,7 @@
             <div class="card">
               <% if flat.photos.attached? %>
                 <div class="card-img-top">
-                  <%= cl_image_tag flat.photos.first.key, height: 300, width: 400, crop: :fill %>
+                  <%= cl_image_tag flat.photos.first.key, height: 300, width: 478, crop: :fill %>
                 </div>
               <% end %>
               <div class="card-body">
@@ -34,31 +34,58 @@
         </div>
       </div>
   </div>
+
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    <div>
-      <% @my_bookings.each do |booking| %>
-      <div>
-        <%= booking.flat.name %>
-        <%= booking.start_date %>
-        <%= booking.end_date %>
-        <%= booking.status %>
-      </div>
-      <% end %>
-    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Flat Name</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @my_bookings.each_with_index do |booking, index| %>
+          <tr>
+          <th scope="row"><%= index + 1%></th>
+          <td><%= booking.flat.name %></td>
+          <td><%= booking.start_date %></td>
+          <td><%= booking.end_date %></td>
+          <td class="table-<%= booking.status %>"><%= booking.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
+
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-    <div data-controller="booking-status">
-    <% @bookings_made_to_me.each do |booking| %>
-      <div class='<%= booking.status %>'>
-        <%= booking.flat.name %>
-        <%= booking.start_date %>
-        <%= booking.end_date %>
-        <div class="status"><%= booking.status %></div>
-        <button class='btn-deny' data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">AJAX Deny</button>
-        <button class='btn-approve' data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">AJAX Approve</button>
-      </div>
-    <% end %>
-    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Flat Name</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody data-controller="booking-status">
+          <% @bookings_made_to_me.each_with_index do |booking, index| %>
+              <tr class='<%= booking.status %>'>
+              <th scope="row"><%= index + 1%></th>
+              <td><%= booking.flat.name %></td>
+              <td><%= booking.start_date %></td>
+              <td><%= booking.end_date %></td>
+              <td class="status" style="width: 150px"><%= booking.status %></td>
+              <td><button class='btn-deny' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="deny" data-booking-status-path-param="<%= booking_deny_path(booking) %>">Deny</button>
+              <button class='btn-approve' style="width: 150px" data-action="booking-status#send" data-booking-status-action-param="approve" data-booking-status-path-param="<%= booking_approve_path(booking) %>">Approve</button></td>
+              </tr>
+          <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
 

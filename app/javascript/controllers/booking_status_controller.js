@@ -5,7 +5,7 @@ export default class extends Controller {
   // static targets = ["deny_button"]
 
   connect() {
-    console.log("Stimulus is working");
+    // console.log("Stimulus is working");
     // console.log(this.element);
     // console.log(this.itemsTarget)
     // console.log(this.deny_buttonTarget)
@@ -16,7 +16,7 @@ export default class extends Controller {
     console.log("send invoked")
     const action = event.params.action
     const path = event.params.path
-    const target = event.target.parentElement.querySelector(".status")
+    const target = event.target.parentElement.parentElement.querySelector(".status")
     console.log(action)
     console.log(path)
     console.log(target)

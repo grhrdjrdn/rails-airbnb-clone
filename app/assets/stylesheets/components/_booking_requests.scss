@@ -5,3 +5,11 @@
 .denied .btn-deny {
   display: none;
 }
+
+.booked .status {
+  color: rgb(0, 148, 2);
+}
+
+.denied .status {
+  color: rgb(208, 18, 1);
+}
